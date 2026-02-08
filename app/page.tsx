@@ -1,5 +1,9 @@
-import { ComponentExample } from "@/components/component-example";
+import SocialButtons from "@/components/buttons/social-buttons";
 
 export default function Page() {
-return <ComponentExample />;
+    return (
+        <main>
+            <SocialButtons />
+        </main>
+    );
 }
