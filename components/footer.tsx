@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-50 max-w-3xl mx-auto border-t">
+    <footer className="w-full max-w-4xl mx-auto border-t mt-12 mb-8 px-4">
       <div className="mx-auto px-4 py-2 md:py-4">
         <div className="flex items-center justify-between transition-all duration-300">
           <Link href="/" className="font-semibold tracking-tight text-sm">
