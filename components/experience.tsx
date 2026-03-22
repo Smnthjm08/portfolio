@@ -29,7 +29,7 @@ export default function Experience() {
                 <div key={index} className="flex flex-col gap-y-3">
                     <div className="flex flex-row items-center justify-between">
                         <div>
-                            <h3 className="font-bold text-lg">{experience.role}</h3>
+                            <h3 className="font-semibold text-lg">{experience.role}</h3>
                             <p className="text-sm font-medium text-muted-foreground">{experience.company}</p>
                         </div>
                         <div className="text-right">

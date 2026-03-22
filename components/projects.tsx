@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Badge } from "./ui/badge";
-import { Github, ExternalLink } from "lucide-react";
+import { Github } from "lucide-react";
 
 const projects = [
     {
@@ -57,7 +57,7 @@ export default function Projects() {
                             target="_blank"
                             className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-x-1 text-sm"
                         >
-                            <Github className="w-4 h-4" />
+                            <Github className="w-3 h-3" />
                             <span className="hidden sm:inline">{project.repo}</span>
                         </Link>
                     </div>
