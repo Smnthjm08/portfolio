@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Outfit } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import GridBackground from "@/components/grid-background";
 
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -34,9 +35,10 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="system"
           enableSystem
-          disableTransitionOnChange
+          disableTransitionOnChange={false}
         >
-          {children}
+          <GridBackground />
+          <div className="relative z-10">{children}</div>
         </ThemeProvider>
       </body>
     </html>

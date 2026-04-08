@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Github } from "lucide-react";
+import { motion } from "framer-motion";
 
 const projects = [
     {
@@ -44,41 +47,130 @@ const projects = [
     }
 ];
 
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.15,
+        },
+    },
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.5,
+            ease: "easeOut" as const,
+        },
+    },
+};
 
 export default function Projects() {
     return (
-        <div className="flex flex-col gap-y-10 w-full mt-4">
+        <motion.div
+            className="flex flex-col gap-y-8 w-full mt-4"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+        >
             {projects.map((project) => (
-                <div key={project.title} className="flex flex-col gap-y-3">
+                <motion.div
+                    key={project.title}
+                    variants={itemVariants}
+                    whileHover={{ y: -4 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex flex-col gap-y-3 p-4 -mx-4 rounded-xl border border-transparent hover:border-border/50 hover:bg-muted/30 transition-colors"
+                >
                     <div className="flex flex-row items-center justify-between">
-                        <h3 className="font-bold text-lg">{project.title}</h3>
-                        <Link
-                            href={`https://github.com/${project.repo}`}
-                            target="_blank"
-                            className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-x-1 text-sm"
+                        <motion.h3
+                            className="font-bold text-lg"
+                            whileHover={{ x: 4 }}
+                            transition={{ duration: 0.2 }}
                         >
-                            <Github className="w-3 h-3" />
-                            <span className="hidden sm:inline">{project.repo}</span>
-                        </Link>
+                            {project.title}
+                        </motion.h3>
+                        <motion.div
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <Link
+                                href={`https://github.com/${project.repo}`}
+                                target="_blank"
+                                className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-x-1 text-sm group"
+                            >
+                                <motion.span
+                                    className="hidden sm:inline"
+                                    initial={{ opacity: 0.7 }}
+                                    whileHover={{ opacity: 1 }}
+                                >
+                                    {project.repo}
+                                </motion.span>
+                                <motion.div
+                                    whileHover={{ rotate: 360 }}
+                                    transition={{ duration: 0.5 }}
+                                >
+                                    <Github className="w-4 h-4" />
+                                </motion.div>
+                            </Link>
+                        </motion.div>
                     </div>
 
-                    <div className="flex flex-wrap gap-2">
+                    <motion.div
+                        className="flex flex-wrap gap-2"
+                        initial="hidden"
+                        animate="visible"
+                        variants={{
+                            visible: {
+                                transition: {
+                                    staggerChildren: 0.05,
+                                },
+                            },
+                        }}
+                    >
                         {project.tech.map((item) => (
-                            <Badge key={item} variant="secondary" className="px-2 py-0 text-[10px] font-medium uppercase tracking-wider">
-                                {item}
-                            </Badge>
+                            <motion.div
+                                key={item}
+                                variants={{
+                                    hidden: { opacity: 0, scale: 0.8 },
+                                    visible: { opacity: 1, scale: 1 },
+                                }}
+                                whileHover={{ scale: 1.1, y: -2 }}
+                                transition={{ duration: 0.2 }}
+                            >
+                                <Badge
+                                    variant="secondary"
+                                    className="px-2 py-0 text-[10px] font-medium uppercase tracking-wider"
+                                >
+                                    {item}
+                                </Badge>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
 
                     <ul className="list-disc list-outside ml-4 flex flex-col gap-y-2">
-                        {project.description.map((point, index) => (
-                            <li key={index} className="text-sm leading-relaxed">
+                        {project.description.map((point, pointIndex) => (
+                            <motion.li
+                                key={pointIndex}
+                                className="text-sm leading-relaxed text-foreground/80"
+                                initial={{ opacity: 0, x: -10 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{
+                                    delay: pointIndex * 0.1,
+                                    duration: 0.4,
+                                }}
+                            >
                                 {point}
-                            </li>
+                            </motion.li>
                         ))}
                     </ul>
-                </div>
+                </motion.div>
             ))}
-        </div>
+        </motion.div>
     );
 }
