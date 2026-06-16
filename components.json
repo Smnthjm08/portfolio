@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "base-vega",
+  "style": "radix-nova",
   "rsc": true,
   "tsx": true,
   "tailwind": {
@@ -19,15 +19,7 @@
     "lib": "@/lib",
     "hooks": "@/hooks"
   },
-  "menuColor": "inverted",
-  "menuAccent": "bold",
-  "registries": {
-    "@shadcn-space": {
-      "url": "https://shadcnspace.com/r/{name}.json",
-      "params": {
-        "email": "${EMAIL}",
-        "license_key": "${LICENSE_KEY}"
-      }
-    }
-  }
+  "menuColor": "default",
+  "menuAccent": "subtle",
+  "registries": {}
 }
