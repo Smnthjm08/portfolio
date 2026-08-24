@@ -1,0 +1,45 @@
+[
+  {
+    "slug": "cron-labs",
+    "priority": 1,
+    "company": "Cron Labs",
+    "role": "Software Developer",
+    "location": "Bangalore",
+    "period": "Jul 2024 – Present",
+    "summary": "Backend and full-stack delivery across two enterprise products — an accounts-finance platform and a seed-to-sale cultivation ERP.",
+    "intro": "Full-stack delivery across two enterprise products for external clients: a finance platform for a large manufacturer, and a seed-to-sale cultivation ERP. Both are closed-source client work, so the write-up below describes the engineering without naming the clients or the products.",
+    "products": [
+      {
+        "name": "Accounts-finance platform",
+        "stack": "Django REST · React 19 + TypeScript · Redis · MySQL · Azure · SAP PI/PO · Docker",
+        "points": [
+          "Own the **SAP ERP integration** and the **multi-step approval workflow**, from the Django data model up to the React 19 UI.",
+          "Built the integration client around the failure modes that actually cost money — **retries deliberately exclude POST**, because a retried post double-books an accounting document, and **SAP's HTTP-200 business errors** are detected rather than read as success.",
+          "Audit and hardening: an **append-only audit log** with a Redis write-behind buffer that can never block the operation it audits, a per-day dashboard cache, a **sliding-window rate limiter**, and the Azure AD SSO flow on the frontend."
+        ]
+      },
+      {
+        "name": "Seed-to-sale cultivation ERP",
+        "stack": "Django 4 · DRF · React 18 · MUI · MySQL · Redis · Highcharts · AWS S3 · Metrc API",
+        "points": [
+          "Rebuilt the **Metrc compliance layer** — the state-mandated seed-to-sale system operators report to — as a declarative registry of **57 endpoint configurations**, with failure handling for the HTTP 200 and empty body Metrc returns on some successful writes, which a naive parse reports as a failed sync.",
+          "**Two-way sync** across plants, harvests, packages, lab-test lots and personnel, plus a crop-plan and routine engine rewrite, a read-authorization gap closed in DRF's default permission map, and **IoT device integration modelled as data** so onboarding a new device is a row insert rather than a deploy."
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "varcons-technologies",
+    "priority": 2,
+    "company": "Varcons Technologies",
+    "role": "Full Stack Developer Intern",
+    "location": "Bangalore",
+    "period": "Aug 2023 – Sep 2023",
+    "summary": "Shipped client-requested features on a MERN real-estate platform under a TDD workflow.",
+    "intro": "A two-month internship on a MERN-stack real-estate platform.",
+    "points": [
+      "Delivered **3 client-requested features** — advanced property search filters, interactive location maps, and saved searches — at a 95% passing rate during testing.",
+      "Worked **test-first with Jest**, which cut deployment-phase bugs by around 15%."
+    ]
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "slug": "shipit",
+    "name": "ShipIt",
+    "priority": 1,
+    "description": "Self-hosted deployment platform inspired by Vercel — GitHub repo in, live URL out.",
+    "tags": [
+      "TypeScript",
+      "Node.js",
+      "Docker",
+      "Redis",
+      "AWS S3",
+      "Postgres"
+    ],
+    "githubHref": "https://github.com/Smnthjm08/ShipIt",
+    "content": "ShipIt connects a GitHub repo through OAuth (public and private), triggers an async build through a Redis-backed job queue, runs the build in an isolated Docker container per deployment, and uploads the resulting artifacts to S3. Completed deployments are served through an Nginx reverse proxy on their own subdomain, with build logs streamed live over WebSockets and status tracked through the full pending → building → success/failed pipeline. The queue handles 10+ concurrent deployments in parallel.\n\nBuilt to explore the infra fundamentals — job queues, worker-based builds, containerized execution — behind platforms like Vercel."
+  },
+  {
+    "slug": "chess",
+    "name": "Chess",
+    "priority": 2,
+    "description": "Real-time 1v1 chess, played over WebSockets.",
+    "tags": [
+      "TypeScript",
+      "WebSockets",
+      "Turborepo",
+      "Express.js"
+    ],
+    "githubHref": "https://github.com/Smnthjm08/chess",
+    "content": "A Turborepo monorepo with a dedicated WebSocket backend for live move synchronization, a separate HTTP backend, a Next.js web client, and a shared Prisma-backed db package. Built to explore real-time state synchronization and game-server architecture outside of the request/response model."
+  },
+  {
+    "slug": "goalana",
+    "name": "Goalana",
+    "priority": 3,
+    "description": "Trustless World Cup prediction markets on Solana, settled on-chain from a verifiable sports oracle.",
+    "tags": [
+      "Solana",
+      "Anchor",
+      "Rust",
+      "TypeScript",
+      "Oracles"
+    ],
+    "demoHref": "https://goalana.smnthjm08.dev/",
+    "githubHref": "https://github.com/Smnthjm08/goalana",
+    "content": "Built for the TxODDS × Superteam Prediction Markets & Settlement track, Goalana settles World Cup prediction markets without an admin deciding the outcome. An 11-instruction Anchor program CPIs into TxODDS' TxLINE oracle to verify a Merkle proof inside the settlement transaction itself — a wrong proof simply reverts, so money can only move on a proof the oracle program accepts.\n\nSettlement integrity was proven adversarially on live Devnet against the real oracle program: forging a goal value, or flipping a single byte of one sibling hash, reverts with `InvalidStatProof` (6023). A 26-test localnet suite covers the program-level guards.\n\nBehind the program sits the ingestion layer — migrated from Helius RPC polling to WebSocket subscriptions to cut redundant upstream calls, with a Postgres/Prisma worker and cron pipeline handling backfill jobs, distributed locks to prevent duplicate processing, and stream-health monitoring."
+  },
+  {
+    "slug": "quota",
+    "name": "Quota",
+    "priority": 4,
+    "description": "On-chain enterprise spending vault with per-seat quotas for AI agents and teams on Solana.",
+    "tags": [
+      "Solana",
+      "Anchor",
+      "Rust",
+      "TypeScript",
+      "USDC"
+    ],
+    "demoHref": "https://quota-sol.smnthjm08.dev/",
+    "githubHref": "https://github.com/Smnthjm08/quota",
+    "content": "Quota is a Solana-powered usage and quota management platform for B2B/SaaS APIs. Companies deposit USDC into an on-chain Vault and allocate funds into individual Seats — each representing an API key, user, or team — with its own usage limit. Usage is enforced on-chain via Anchor programs, with a Node.js backend triggering consume instructions and validating limits at both the on-chain and off-chain layer, so over-allocation is unrepresentable rather than merely rejected."
+  },
+  {
+    "slug": "sentinel",
+    "name": "Sentinel",
+    "priority": 5,
+    "description": "Programmable on-chain compliance enforcement for Token-2022 tokens on Solana.",
+    "tags": [
+      "Solana",
+      "Anchor",
+      "Rust",
+      "Token-2022",
+      "LiteSVM"
+    ],
+    "demoHref": "https://sentinel.smnthjm08.dev/",
+    "githubHref": "https://github.com/Smnthjm08/sentinel",
+    "content": "Sentinel is a Token-2022 Transfer Hook program that enforces customizable compliance rules atomically on every token transfer — no off-chain monitoring, no backend approval queue, no centralized gatekeeper. When a wallet calls `transfer_checked` on a Sentinel-protected mint, Token-2022 CPIs into Sentinel before the transfer settles, evaluating the sender's on-chain compliance record against an upgradeable ruleset and allowing or reverting the transaction atomically.\n\nNine rule types ship in the engine: allowlist, blocklist, velocity limits, KYC expiry, jurisdiction blocking, transfer caps, cooldowns, time windows, and minimum floors. Configs, rulesets, and per-wallet compliance records are modelled as PDAs, and 15+ LiteSVM test cases run in-process without spinning up a local validator."
+  },
+  {
+    "slug": "payment-service",
+    "name": "payment-service",
+    "priority": 6,
+    "description": "Multi-tenant billing API in Rust with an enforced invoice state machine and idempotent payments.",
+    "tags": [
+      "Rust",
+      "Axum",
+      "PostgreSQL",
+      "SQLx",
+      "Docker"
+    ],
+    "githubHref": "https://github.com/Smnthjm08/payment-service",
+    "content": "An API-key authenticated multi-tenant billing service with customer and invoice management, a Draft → Open → Paid state machine enforced at the data layer, and idempotent PSP-backed payments keyed on `Idempotency-Key`.\n\nThe integration tests assert the correctness properties that actually matter under concurrency: 10 concurrent `/pay` requests yield exactly one success, a replayed idempotency key returns the cached response without a second PSP call, and PSP timeouts and 500s roll the invoice back to `Open` rather than stranding it in `Processing`.\n\nRounded out with signed async webhook delivery, a mock PSP with deterministic failure tokens, and one-command `docker compose` bring-up with migrations applied on startup."
+  },
+  {
+    "slug": "mini-sealevel",
+    "name": "Mini Sealevel Runtime",
+    "priority": 7,
+    "description": "A from-scratch Rust implementation of Solana's Sealevel parallel transaction execution model.",
+    "tags": [
+      "Rust",
+      "Solana",
+      "Rayon",
+      "Concurrency"
+    ],
+    "githubHref": "https://github.com/Smnthjm08/mini-sealevel",
+    "content": "Solana's Sealevel runtime lets independent transactions execute concurrently by having each transaction declare the accounts it reads and writes upfront. This project rebuilds that scheduling model from the design up: transactions declare read/write account sets, a lock table admits concurrent readers but exclusive writers, and a FIFO scheduler dispatches non-conflicting batches to a Rayon executor while deferring conflicts.\n\nIt is benchmarked against a sequential baseline across five contention levels (0–90%) with Criterion, and the scheduler itself is instrumented — rounds, deferrals, batch-size distribution, and waiting-queue depth.\n\nBankingStage, AccountsDB, fee-priority scheduling, and compute budgets are deliberately omitted to keep the focus on the scheduling algorithm itself."
+  },
+  {
+    "slug": "constellation-erasure",
+    "name": "Constellation Erasure",
+    "priority": 8,
+    "description": "A Rust implementation of Constellation-inspired Reed–Solomon erasure coding for Solana's broadcast stage.",
+    "tags": [
+      "Rust",
+      "Reed-Solomon",
+      "Solana"
+    ],
+    "githubHref": "https://github.com/Smnthjm08/constellation-erasure",
+    "content": "Explores the Reed–Solomon forward error correction pipeline that Solana's broadcast stage relies on — modelled on Agave's `shredder.rs` and extended toward the Constellation paper's PSlice/PShred architecture.\n\nThe encoder is parameterized: a 64-data / 192-parity configuration encodes to 256 shards over GF(2⁸), driven with randomized payloads rather than repetitive test data. Correctness is pinned at the recovery boundary in both directions — losing exactly 192 shards reconstructs the payload, losing 193 provably fails — and randomized loss fuzzing shuffles drop positions across iterations, round-trip verifying recovered bytes against the original."
+  }
+]
